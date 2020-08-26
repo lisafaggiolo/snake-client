@@ -1,23 +1,65 @@
-const net = require('net');
-
 /**
- * Establishes connection with the game server
+ * Setup User Interface 
+ * Specifically, so that we can handle user input via stdin
  */
-const connect = function() {
-  const conn = net.createConnection({ 
-    host: '10.0.2.15',
-    port: 50541
-  });
-  // interpret incoming data as text
-  conn.setEncoding('utf8'); 
-  
-  conn.on('data', (data) => { 
-    console.log(data)
-  });
 
-  return conn;
+const stdin = process.stdin;
+
+
+const setupInput = function() {
+  const stdin = process.stdin;
+  stdin.setRawMode(true);
+  stdin.setEncoding('utf8');
+  stdin.resume();
+  return stdin;
 }
 
+const handleUserInput = (key) => {
 
-console.log('Connecting ...');
-connect()
+  stdin.on('data', (key) => {
+    process.stdout.write('\u0003');
+
+    if (key === '\u0003'){
+      process.exit()
+    } else {
+      process.stdout.write('.');
+    }
+
+
+    /*if (key === '\u0003'){
+      process.exit()
+    } else {
+      process.stdout.write('.');
+    }
+
+
+    if (key === '\u0003'){
+      process.exit()
+    } else {
+      process.stdout.write('.');
+    }
+
+
+    if (key === '\u0003'){
+      process.exit()
+    } else {
+      process.stdout.write('.');
+    }
+
+
+    if (key === '\u0003'){
+      process.exit()
+    } else {
+      process.stdout.write('.');
+    }*/
+  });
+
+}
+
+const { connect } = require('./client.js');
+
+console.log('Connecting...');
+
+connect();
+setupInput();
+handleUserInput();
