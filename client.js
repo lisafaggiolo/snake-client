@@ -5,8 +5,8 @@ const process = require('process')
  */
 const connect = function() {
   const conn = net.createConnection({ 
-    host: '10.0.2.15',
-    port: 50541
+    host: '135.23.222.131',
+    port: 50542
   });
  
   // interpret incoming data as text
